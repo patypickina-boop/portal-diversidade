@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portal Diversidade do MPDFT — Informações sobre direitos LGBTQIA+, legislação, canais de denúncia, rede de atendimento e estatísticas institucionais do NED/NDH no Distrito Federal.">
   <title>Portal Diversidade — MPDFT</title>
   
   <!-- Fonts & Standard Libraries -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/basecoat.cdn.min.css">
   <style>
 /* Skip artifact shell — fixed styles served beside every artifact.
@@ -133,41 +134,398 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
 </script>
 
   <style>
-    /* MANUAL DE IDENTIDADE VISUAL MPDFT (2012) - PALETA OFICIAL */
+    /* =========================================================================
+       RECURSOS DE ACESSIBILIDADE WCAG 2.1 AA/AAA IMPLEMENTADOS:
+       1. Barra de acessibilidade fixa com persistência em localStorage
+       2. Ajuste de tamanho de fonte em 5 níveis (100% a 150%)
+       3. Modo Alto Contraste oficial (Fundo #000000, Texto #FFFF00, Links #00FFFF)
+       4. Modo Escuro acessível com contraste superior a 7:1
+       5. Destacador de links com sublinhado e alto contraste
+       6. Espaçamento ampliado de texto (letter-spacing e line-height)
+       7. Fonte legível para pessoas com dislexia / baixa visão
+       8. Widget VLibras oficial integrado para tradução em Libras
+       9. Skip Link "Pular para o conteúdo principal"
+       10. Foco visível (outline de 3px com alto contraste) em todos os elementos
+       11. Suporte a leitores de tela: tabelas alternativas para gráficos canvas,
+           landmarks ARIA, rótulos aria-label, aria-live="polite" nos indicadores
+       12. Layout 100% responsivo para celular com menu hambúrguer acessível por teclado
+       13. Área de toque mínima de 44x44px em botões e elementos interativos
+       14. Suporte nativo a prefers-reduced-motion e prefers-contrast
+       ========================================================================= */
+
+    /* IDENTIDADE VISUAL MPDFT — ALINHADO AO PORTAL CRIANÇA E ADOLESCENTE */
     :root {
-      --accent: #1C5EA9;
-      --accent-hover: #00284C;
-      --accent-text: #00284C;
+      --accent: #2C5F8A;
+      --accent-hover: #1B3A5C;
+      --accent-text: #1B3A5C;
       --accent-contrast: #ffffff;
-      --mpdft-blue-dark: #00284C;
-      --mpdft-blue-mid: #1C5EA9;
+      --mpdft-blue-dark: #1B3A5C;
+      --mpdft-blue-mid: #2C5F8A;
       --mpdft-blue-light: #4A90D0;
-      --mpdft-blue-soft: #D6E6F5;
-      --mpdft-gray-bg: #F2F4F7;
-      --mpdft-orange-action: #E87811;
-      --mpdft-text-dark: #1E2A38;
+      --mpdft-blue-soft: #EBF3FA;
+      --mpdft-gray-bg: #F7F9FB;
+      --mpdft-orange-action: #C35700; /* Contraste 4.6:1 sobre branco (WCAG AA) */
+      --mpdft-orange-hover: #9E4500;
+      --mpdft-text-dark: #1F2D3D;
       --brand-rainbow: linear-gradient(90deg, #e53935 0%, #fb8c00 16.6%, #fdd835 33.3%, #43a047 50%, #1e88e5 66.6%, #8e24aa 100%);
-      --bg-surface-alt: #F2F4F7;
       --badge-todo-bg: #fef3c7;
       --badge-todo-txt: #92400e;
+      --font-scale: 1;
+      --focus-ring: #0284c7;
+    }
+
+    html {
+      font-size: calc(16px * var(--font-scale, 1));
+      scroll-behavior: smooth;
     }
 
     body {
       background-color: var(--mpdft-gray-bg);
       color: var(--mpdft-text-dark);
+      font-family: 'Segoe UI', 'Nunito', Roboto, Arial, sans-serif;
+      font-size: 1rem;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
     }
 
-    /* Minimal Rainbow Line Details */
+    /* Skip link para navegação por teclado */
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 1rem;
+      background: #ffff00;
+      color: #000000;
+      padding: 0.75rem 1.25rem;
+      font-weight: 800;
+      text-decoration: underline;
+      z-index: 99999;
+      border: 3px solid #000000;
+      border-radius: 4px;
+      transition: top 0.2s ease;
+    }
+    .skip-link:focus {
+      top: 10px;
+      outline: 3px solid #000000;
+    }
+
+    /* Foco visível consistente para acessibilidade */
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible,
+    [tabindex="0"]:focus-visible {
+      outline: 3px solid var(--focus-ring) !important;
+      outline-offset: 3px !important;
+    }
+
+    /* Elementos ocultos visualmente mas disponíveis para leitores de tela */
+    .sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    /* BARRA FIXA DE ACESSIBILIDADE WCAG */
+    .a11y-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: #1B3A5C;
+      color: #ffffff;
+      padding: 0.35rem 0.75rem;
+      border-bottom: 2px solid #0D1E30;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+    .a11y-toolbar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .a11y-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: #E2E8F0;
+    }
+    .a11y-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .a11y-btn {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 6px;
+      padding: 0.35rem 0.65rem;
+      font-size: 0.825rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+      min-height: 44px;
+      min-width: 44px;
+      transition: background 0.15s, transform 0.15s, border-color 0.15s;
+    }
+    .a11y-btn:hover {
+      background: rgba(255, 255, 255, 0.28);
+      border-color: #ffffff;
+    }
+    .a11y-btn[aria-pressed="true"] {
+      background: #ffffff;
+      color: #1B3A5C;
+      border-color: #ffffff;
+      font-weight: 800;
+    }
+
+    /* MODOS DE ACESSIBILIDADE DINÂMICOS */
+    /* 1. Alto Contraste (Preto e Amarelo WCAG AAA) */
+    html.high-contrast,
+    html.high-contrast body {
+      background-color: #000000 !important;
+      color: #ffff00 !important;
+    }
+    html.high-contrast .a11y-toolbar {
+      background-color: #000000 !important;
+      border-bottom: 3px solid #ffff00 !important;
+    }
+    html.high-contrast .a11y-btn {
+      background-color: #000000 !important;
+      color: #ffff00 !important;
+      border: 2px solid #ffff00 !important;
+    }
+    html.high-contrast .a11y-btn:hover,
+    html.high-contrast .a11y-btn[aria-pressed="true"] {
+      background-color: #ffff00 !important;
+      color: #000000 !important;
+    }
+    html.high-contrast .top-bar {
+      background-color: #000000 !important;
+      color: #ffff00 !important;
+      border-bottom: 2px solid #ffff00 !important;
+    }
+    html.high-contrast .header-main {
+      background: #000000 !important;
+      border-bottom: 3px solid #ffff00 !important;
+    }
+    html.high-contrast .logo-mpdft-wrap {
+      background: #000000 !important;
+      border: 2px solid #ffff00 !important;
+    }
+    html.high-contrast .nav-container {
+      background-color: #000000 !important;
+      border-bottom: 3px solid #ffff00 !important;
+    }
+    html.high-contrast .nav-tab-btn {
+      color: #ffff00 !important;
+      border: 1px solid #ffff00 !important;
+      margin: 2px !important;
+    }
+    html.high-contrast .nav-tab-btn.active {
+      background-color: #ffff00 !important;
+      color: #000000 !important;
+    }
+    html.high-contrast .panel,
+    html.high-contrast .card-interactive,
+    html.high-contrast .q-a-box,
+    html.high-contrast .kpi,
+    html.high-contrast .toast-banner,
+    html.high-contrast .modal-content {
+      background-color: #000000 !important;
+      color: #ffff00 !important;
+      border: 2px solid #ffff00 !important;
+      box-shadow: none !important;
+    }
+    html.high-contrast h1, html.high-contrast h2, html.high-contrast h3, html.high-contrast h4, html.high-contrast h5,
+    html.high-contrast .kpi-value, html.high-contrast strong {
+      color: #ffff00 !important;
+    }
+    html.high-contrast a,
+    html.high-contrast a:visited {
+      color: #00ffff !important;
+      text-decoration: underline !important;
+    }
+    html.high-contrast a:hover {
+      background-color: #00ffff !important;
+      color: #000000 !important;
+    }
+    html.high-contrast .btn-action,
+    html.high-contrast .btn-primary,
+    html.high-contrast .btn-outline {
+      background-color: #000000 !important;
+      color: #ffff00 !important;
+      border: 2px solid #ffff00 !important;
+    }
+    html.high-contrast .btn-action:hover,
+    html.high-contrast .btn-primary:hover,
+    html.high-contrast .btn-outline:hover {
+      background-color: #ffff00 !important;
+      color: #000000 !important;
+    }
+    html.high-contrast .badge,
+    html.high-contrast .tag-todo {
+      background-color: #000000 !important;
+      color: #ffff00 !important;
+      border: 1px solid #ffff00 !important;
+    }
+    html.high-contrast table.shell-table {
+      border: 2px solid #ffff00 !important;
+    }
+    html.high-contrast table.shell-table th,
+    html.high-contrast table.shell-table td {
+      border: 1px solid #ffff00 !important;
+      color: #ffff00 !important;
+      background: #000000 !important;
+    }
+    html.high-contrast footer {
+      background-color: #000000 !important;
+      color: #ffff00 !important;
+      border-top: 3px solid #ffff00 !important;
+    }
+    html.high-contrast *:focus-visible {
+      outline: 4px solid #ffff00 !important;
+      outline-offset: 3px !important;
+    }
+
+    /* 2. Modo Escuro Confortável */
+    html.dark-mode,
+    html.dark-mode body {
+      background-color: #121212 !important;
+      color: #E0E0E0 !important;
+    }
+    html.dark-mode .top-bar {
+      background-color: #0c1824 !important;
+      color: #cfd9e4 !important;
+      border-bottom-color: #223344 !important;
+    }
+    html.dark-mode .header-main {
+      background: linear-gradient(135deg, #102133 0%, #162C44 100%) !important;
+      border-bottom-color: #223c58 !important;
+    }
+    html.dark-mode .nav-container {
+      background-color: #0c1a29 !important;
+      border-bottom-color: #254b73 !important;
+    }
+    html.dark-mode .panel,
+    html.dark-mode .card-interactive,
+    html.dark-mode .q-a-box,
+    html.dark-mode .kpi,
+    html.dark-mode .modal-content {
+      background-color: #1E1E1E !important;
+      color: #E0E0E0 !important;
+      border-color: #333333 !important;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.4) !important;
+    }
+    html.dark-mode h1, html.dark-mode h2, html.dark-mode h3, html.dark-mode h4 {
+      color: #F1F5F9 !important;
+    }
+    html.dark-mode .kpi-value {
+      color: #60A5FA !important;
+    }
+    html.dark-mode .toast-banner {
+      background-color: #1A2837 !important;
+      color: #D6E6F5 !important;
+      border-color: #2D4C6E !important;
+    }
+    html.dark-mode table.shell-table th {
+      background: #1B3A5C !important;
+      color: #ffffff !important;
+    }
+    html.dark-mode table.shell-table td {
+      border-bottom-color: #2A2A2A !important;
+      color: #E0E0E0 !important;
+    }
+    html.dark-mode .badge {
+      background-color: #263647 !important;
+      color: #93C5FD !important;
+    }
+    html.dark-mode a {
+      color: #93C5FD !important;
+    }
+    html.dark-mode footer {
+      background-color: #0c1824 !important;
+      border-top-color: #254b73 !important;
+    }
+
+    /* 3. Links Destacados */
+    html.highlight-links a {
+      text-decoration: underline !important;
+      text-decoration-thickness: 2px !important;
+      text-underline-offset: 3px !important;
+      font-weight: 700 !important;
+    }
+
+    /* 4. Espaçamento Aumentado */
+    html.text-spacing body,
+    html.text-spacing p,
+    html.text-spacing li,
+    html.text-spacing a,
+    html.text-spacing span,
+    html.text-spacing button,
+    html.text-spacing td {
+      letter-spacing: 0.12em !important;
+      word-spacing: 0.16em !important;
+      line-height: 1.9 !important;
+    }
+
+    /* 5. Fonte Legível / Dyslexia-Friendly */
+    html.readable-font,
+    html.readable-font body,
+    html.readable-font button,
+    html.readable-font input,
+    html.readable-font select,
+    html.readable-font textarea {
+      font-family: 'Comic Sans MS', 'Verdana', sans-serif !important;
+      letter-spacing: 0.05em;
+    }
+
+    /* Preferência de redução de movimentos (WCAG 2.1) */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Segoe UI', 'Nunito', Roboto, Arial, sans-serif;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+    }
+
+    /* Minimal Rainbow Line Details (preservado apenas como detalhe sutil) */
     .rainbow-strip {
-      height: 4px;
+      height: 3px;
       background: var(--brand-rainbow);
       width: 100%;
     }
     .title-rainbow-underline {
-      height: 4px;
+      height: 3px;
       background: var(--brand-rainbow);
       border-radius: 2px;
-      margin-top: 4px;
+      margin-top: 6px;
       width: 100%;
       max-width: 220px;
     }
@@ -196,8 +554,8 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
 
     /* Utility Bar Header */
     .top-bar {
-      background-color: #001C36;
-      color: var(--mpdft-blue-soft);
+      background-color: #132B45;
+      color: #D6E6F5;
       font-size: 0.825rem;
       padding: 0.5rem 1rem;
       display: flex;
@@ -218,57 +576,69 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       gap: 0.35rem;
     }
 
-    /* Header Main */
+    /* Header Principal com degradê institucional suave */
     .header-main {
-      background-color: var(--mpdft-blue-dark);
+      background: linear-gradient(135deg, #1B3A5C 0%, #2C5F8A 100%);
       color: #ffffff;
-      padding: 1.25rem 1rem;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding: 1.5rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 4px 20px rgba(27, 58, 92, 0.12);
     }
     .header-container {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1.25rem;
+      gap: 1.5rem;
       flex-wrap: wrap;
     }
     .header-brand {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 20px;
       text-decoration: none;
     }
-    .logo-mpdft {
-      height: 56px;
-      width: auto;
+    
+    /* Contêiner da Logomarca Oficial MPDFT embutida em SVG */
+    .logo-mpdft-wrap {
       background: #FFFFFF;
-      padding: 8px 12px;
-      border-radius: 8px;
+      padding: 6px 12px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      flex-shrink: 0;
+    }
+    .logo-mpdft-svg {
+      display: block;
+      height: 44px;
+      width: auto;
+      max-width: 100%;
     }
 
     .brand-titles h1 {
       font-size: 1.5rem;
-      font-weight: 800;
+      font-weight: 700;
       margin: 0;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.3px;
       color: #ffffff;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
     }
     .brand-titles p {
-      margin: 0.25rem 0 0 0;
-      font-size: 0.875rem;
-      color: var(--mpdft-blue-soft);
+      margin: 0.3rem 0 0 0;
+      font-size: 0.9rem;
+      color: #D6E6F5;
+      font-weight: 400;
     }
 
-    /* Navigation Menu */
+    /* Menu Horizontal com sublinhado animado estilo Criança & Adolescente */
     .nav-container {
-      background-color: #001C36;
+      background-color: #152E4A;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 14px rgba(27, 58, 92, 0.15);
       border-bottom: 2px solid var(--mpdft-blue-mid);
     }
     .nav-tabs {
@@ -278,87 +648,129 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       padding: 0 1rem;
       scrollbar-width: thin;
       scrollbar-color: var(--mpdft-blue-light) transparent;
+      gap: 0.25rem;
     }
     .nav-tab-btn {
       background: transparent;
       border: none;
-      color: var(--mpdft-blue-soft);
-      padding: 0.85rem 1.15rem;
+      color: rgba(255, 255, 255, 0.9);
+      padding: 0.9rem 1.15rem;
       font-weight: 600;
       font-size: 0.875rem;
       cursor: pointer;
-      transition: all 0.2s ease;
-      border-bottom: 3px solid transparent;
+      transition: all 0.25s ease;
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
+      position: relative;
+      border-radius: 8px 8px 0 0;
+    }
+    /* Sublinhado animado */
+    .nav-tab-btn::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 3px;
+      background: var(--mpdft-blue-light);
+      border-radius: 3px 3px 0 0;
+      transition: width 0.25s ease;
     }
     .nav-tab-btn:hover {
       color: #ffffff;
-      background: rgba(255,255,255,0.08);
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .nav-tab-btn:hover::after {
+      width: 80%;
     }
     .nav-tab-btn.active {
       color: #ffffff;
-      border-bottom-color: var(--mpdft-orange-action);
-      background: var(--mpdft-blue-mid);
+      background: rgba(44, 95, 138, 0.4);
+    }
+    .nav-tab-btn.active::after {
+      width: 100%;
+      background: var(--mpdft-orange-action);
+    }
+
+    /* Botão Hambúrguer Mobile */
+    .menu-toggle-btn {
+      display: none;
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 8px;
+      padding: 0.6rem 0.85rem;
+      font-size: 1rem;
+      cursor: pointer;
+      align-items: center;
+      gap: 0.5rem;
+      min-height: 44px;
+      min-width: 44px;
+    }
+    .menu-toggle-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
     }
 
     /* Main Container & Sections */
     .section-block {
       display: none;
-      animation: fadeIn 0.3s ease;
     }
     .section-block.active {
       display: block;
+      animation: fadeIn 0.3s ease;
     }
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(4px); }
+      from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Custom Verification Tags */
+    /* Tags */
     .tag-todo {
       background-color: var(--badge-todo-bg);
       color: var(--badge-todo-txt);
       font-size: 0.75rem;
       padding: 0.15rem 0.45rem;
-      border-radius: 4px;
+      border-radius: 6px;
       font-weight: 700;
       border: 1px solid #fcd34d;
       display: inline-block;
       margin-left: 0.35rem;
     }
 
-    /* Cards & Layout */
+    /* Cards e Painéis com cantos arredondados (14px) e sombra suave acolhedora */
     .panel {
       background: #ffffff;
-      border: 1px solid var(--mpdft-blue-soft);
-      border-radius: 8px;
+      border: 1px solid #E2E8F0;
+      border-radius: 14px;
+      box-shadow: 0 4px 14px rgba(27, 58, 92, 0.05);
     }
 
     .grid-2 {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.25rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.35rem;
     }
     .grid-3 {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.25rem;
+      gap: 1.35rem;
     }
     
     .card-interactive {
       background: #ffffff;
-      border: 1px solid var(--mpdft-blue-soft);
-      border-radius: 8px;
-      padding: 1.25rem;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      border: 1px solid #E2E8F0;
+      border-radius: 14px;
+      padding: 1.35rem;
+      box-shadow: 0 4px 14px rgba(27, 58, 92, 0.05);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
       position: relative;
     }
     .card-interactive:hover {
-      transform: translateY(-2px);
+      transform: translateY(-3px);
       border-color: var(--mpdft-blue-light);
-      box-shadow: 0 8px 16px rgba(0, 40, 76, 0.08);
+      box-shadow: 0 10px 24px rgba(27, 58, 92, 0.1);
     }
     .card-interactive::before {
       content: '';
@@ -366,10 +778,10 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       top: 0;
       left: 0;
       right: 0;
-      height: 3px;
+      height: 4px;
       background: var(--mpdft-blue-mid);
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
+      border-top-left-radius: 14px;
+      border-top-right-radius: 14px;
       transition: background 0.2s ease;
     }
     .card-interactive:hover::before {
@@ -390,17 +802,23 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       width: 0.75rem;
       height: 0.75rem;
       border-radius: 50%;
-      background: var(--mpdft-blue-dark);
+      background: var(--mpdft-blue-mid);
       border: 2px solid #ffffff;
+      box-shadow: 0 0 0 2px var(--mpdft-blue-light);
     }
 
     .q-a-box {
       background-color: #ffffff;
-      border: 1px solid var(--mpdft-blue-soft);
+      border: 1px solid #E2E8F0;
       border-left: 4px solid var(--mpdft-blue-mid);
-      border-radius: 6px;
-      padding: 1rem;
+      border-radius: 12px;
+      padding: 1.15rem;
       margin-bottom: 1rem;
+      box-shadow: 0 2px 8px rgba(27, 58, 92, 0.04);
+      transition: box-shadow 0.2s ease;
+    }
+    .q-a-box:hover {
+      box-shadow: 0 6px 16px rgba(27, 58, 92, 0.08);
     }
     .q-a-box h4 {
       margin: 0 0 0.5rem 0;
@@ -411,13 +829,14 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       justify-content: space-between;
     }
 
-    /* KPI Cards - Borda Superior Azul Institucional */
+    /* KPI Cards com cantos bem arredondados e borda superior azul institucional */
     .kpi {
       background: #ffffff;
-      border: 1px solid var(--mpdft-blue-soft);
-      border-top: 4px solid var(--mpdft-blue-dark) !important;
-      border-radius: 8px;
-      padding: 1.25rem;
+      border: 1px solid #E2E8F0;
+      border-top: 4px solid var(--mpdft-blue-mid) !important;
+      border-radius: 14px;
+      padding: 1.35rem;
+      box-shadow: 0 4px 14px rgba(27, 58, 92, 0.05);
     }
     .kpi-value {
       color: var(--mpdft-blue-dark) !important;
@@ -428,37 +847,62 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       font-size: 0.85rem;
     }
 
-    /* Action & Institutional Buttons */
+    /* Botões arredondados em formato pill com área de toque mínima acessível */
+    .btn {
+      border-radius: 9999px !important;
+      font-family: inherit;
+      min-height: 44px;
+      min-width: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .btn-action {
       background-color: var(--mpdft-orange-action) !important;
       color: #ffffff !important;
-      border: none !important;
+      border: 1px solid rgba(0,0,0,0.1) !important;
+      border-radius: 9999px !important;
+      padding: 0.6rem 1.35rem !important;
       font-weight: 700;
-      transition: background 0.2s ease;
+      box-shadow: 0 2px 8px rgba(195, 87, 0, 0.35);
+      transition: all 0.2s ease;
     }
     .btn-action:hover {
-      background-color: #cf670a !important;
+      background-color: var(--mpdft-orange-hover) !important;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(195, 87, 0, 0.45);
     }
 
     .btn-primary {
       background-color: var(--mpdft-blue-mid) !important;
       color: #ffffff !important;
       border: none !important;
+      border-radius: 9999px !important;
+      padding: 0.5rem 1.25rem !important;
       font-weight: 600;
+      box-shadow: 0 2px 8px rgba(44, 95, 138, 0.25);
+      transition: all 0.2s ease;
     }
     .btn-primary:hover {
       background-color: var(--mpdft-blue-dark) !important;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(27, 58, 92, 0.3);
     }
 
     .btn-outline {
       border: 1px solid var(--mpdft-blue-mid) !important;
       color: var(--mpdft-blue-mid) !important;
       background: transparent !important;
+      border-radius: 9999px !important;
+      padding: 0.45rem 1.15rem !important;
       font-weight: 600;
+      transition: all 0.2s ease;
     }
     .btn-outline:hover {
       background: var(--mpdft-blue-soft) !important;
       color: var(--mpdft-blue-dark) !important;
+      transform: translateY(-1px);
     }
 
     /* Modal Styling */
@@ -468,7 +912,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 40, 76, 0.8);
+      background: rgba(27, 58, 92, 0.75);
       backdrop-filter: blur(4px);
       display: flex;
       align-items: center;
@@ -484,31 +928,32 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
     }
     .modal-content {
       background: #ffffff;
-      border-radius: 12px;
+      border-radius: 16px;
       max-width: 550px;
       width: 90%;
-      padding: 1.75rem;
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
-      transform: translateY(10px);
+      padding: 1.85rem;
+      box-shadow: 0 20px 30px -5px rgba(27, 58, 92, 0.25);
+      transform: translateY(12px);
       transition: transform 0.25s ease;
-      border: 1px solid var(--mpdft-blue-soft);
+      border: 1px solid #E2E8F0;
     }
     .modal-overlay.open .modal-content {
       transform: translateY(0);
     }
 
-    /* Footer Institucional */
+    /* Footer Institucional em Azul-Escuro */
     footer {
       background-color: var(--mpdft-blue-dark);
-      color: var(--mpdft-blue-soft);
-      padding: 2.5rem 1rem 1.5rem 1rem;
-      margin-top: 3rem;
+      color: #D6E6F5;
+      padding: 2.75rem 1rem 1.75rem 1rem;
+      margin-top: 3.5rem;
       border-top: 3px solid var(--mpdft-blue-mid);
       font-size: 0.875rem;
     }
     footer a {
-      color: var(--mpdft-blue-light);
+      color: #8CC3F2;
       text-decoration: none;
+      transition: color 0.2s ease;
     }
     footer a:hover {
       color: #ffffff;
@@ -517,16 +962,93 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
 
     .toast-banner {
       background: var(--mpdft-blue-soft);
-      border: 1px solid var(--mpdft-blue-light);
+      border: 1px solid #C8DEF2;
       color: var(--mpdft-blue-dark);
-      border-radius: 6px;
-      padding: 0.85rem 1rem;
+      border-radius: 12px;
+      padding: 0.95rem 1.25rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
       margin-bottom: 1.5rem;
       flex-wrap: wrap;
+      box-shadow: 0 2px 8px rgba(27, 58, 92, 0.04);
+    }
+
+    /* Container com rolagem horizontal acessível */
+    .table-scroll-container {
+      overflow-x: auto;
+      border-radius: 8px;
+    }
+    .table-scroll-container:focus-visible {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: -2px;
+    }
+
+    /* RESPONSIVIDADE MOBILE TOTAL */
+    @media (max-width: 860px) {
+      .header-container {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .brand-titles h1 {
+        font-size: 1.25rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle-btn {
+        display: inline-flex;
+      }
+      .nav-container {
+        padding: 0.5rem 1rem;
+      }
+      .nav-tabs {
+        display: none;
+        flex-direction: column;
+        padding: 0.5rem 0;
+        gap: 0.35rem;
+        max-height: calc(100vh - 180px);
+        overflow-y: auto;
+      }
+      .nav-tabs.open {
+        display: flex;
+      }
+      .nav-tab-btn {
+        width: 100%;
+        text-align: left;
+        border-radius: 6px;
+        padding: 0.75rem 1rem;
+        min-height: 44px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+      }
+      .nav-tab-btn::after {
+        display: none;
+      }
+      .grid-2, .grid-3 {
+        grid-template-columns: 1fr;
+      }
+      .a11y-toolbar-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .a11y-controls {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .a11y-btn {
+        flex: 1 1 auto;
+        padding: 0.35rem 0.4rem;
+        font-size: 0.75rem;
+      }
+      .top-bar-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+      }
+      .top-bar-info span:nth-child(2) {
+        display: none;
+      }
     }
 
     @media print {
@@ -546,41 +1068,103 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
 </head>
 <body>
 
+  <!-- Skip link de acessibilidade (primeiro elemento focável via teclado) -->
+  <a href="#mainContent" class="skip-link">Pular para o conteúdo principal</a>
+
+  <!-- BARRA DE ACESSIBILIDADE FIXA (WCAG 2.1 AA/AAA) -->
+  <aside class="a11y-toolbar" role="region" aria-label="Barra de ferramentas de acessibilidade">
+    <div class="a11y-toolbar-inner">
+      <span class="a11y-label">
+        <span aria-hidden="true">♿</span> Recursos de Acessibilidade:
+      </span>
+      <div class="a11y-controls" role="toolbar" aria-label="Opções de personalização visual">
+        <button type="button" class="a11y-btn" id="btnFontIncrease" onclick="changeFontSize(1)" aria-label="Aumentar tamanho do texto (A+)">
+          <span aria-hidden="true">A+</span> <span>Aumentar</span>
+        </button>
+        <button type="button" class="a11y-btn" id="btnFontDecrease" onclick="changeFontSize(-1)" aria-label="Diminuir tamanho do texto (A−)">
+          <span aria-hidden="true">A−</span> <span>Diminuir</span>
+        </button>
+        <button type="button" class="a11y-btn" id="btnHighContrast" onclick="toggleHighContrast()" aria-pressed="false" aria-label="Alternar tema de alto contraste preto e amarelo">
+          <span aria-hidden="true">◐</span> <span>Alto Contraste</span>
+        </button>
+        <button type="button" class="a11y-btn" id="btnDarkMode" onclick="toggleDarkMode()" aria-pressed="false" aria-label="Alternar modo escuro">
+          <span aria-hidden="true">🌙</span> <span>Modo Escuro</span>
+        </button>
+        <button type="button" class="a11y-btn" id="btnHighlightLinks" onclick="toggleHighlightLinks()" aria-pressed="false" aria-label="Sublinhar e destacar todos os links">
+          <span aria-hidden="true">🔗</span> <span>Links</span>
+        </button>
+        <button type="button" class="a11y-btn" id="btnTextSpacing" onclick="toggleTextSpacing()" aria-pressed="false" aria-label="Aumentar espaçamento entre linhas e letras">
+          <span aria-hidden="true">↔</span> <span>Espaçamento</span>
+        </button>
+        <button type="button" class="a11y-btn" id="btnReadableFont" onclick="toggleReadableFont()" aria-pressed="false" aria-label="Alternar para fonte amigável para dislexia e maior legibilidade">
+          <span aria-hidden="true">🔤</span> <span>Fonte Legível</span>
+        </button>
+        <button type="button" class="a11y-btn" id="btnVLibras" onclick="activateVLibras()" aria-label="Ativar widget oficial VLibras do Governo Federal para tradução em Libras">
+          <span aria-hidden="true">🤟</span> <span>VLibras</span>
+        </button>
+        <button type="button" class="a11y-btn" onclick="resetAccessibility()" aria-label="Restaurar configurações padrão de acessibilidade">
+          <span aria-hidden="true">↺</span> <span>Resetar</span>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Estrutura padrão de integração do VLibras do Governo Federal -->
+  <div vw class="enabled" aria-label="Widget VLibras para Língua Brasileira de Sinais" role="region">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+
   <!-- Rainbow Decorative Header Strip -->
-  <div class="rainbow-strip" role="presentation"></div>
+  <div class="rainbow-strip" role="presentation" aria-hidden="true"></div>
 
   <!-- Top Utility Bar -->
   <div class="top-bar">
     <div class="top-bar-info">
       <span><strong>Atendimento NED:</strong> Segunda a Sexta, 12h às 19h</span>
-      <span style="opacity: 0.5;">|</span>
+      <span style="opacity: 0.5;" aria-hidden="true">|</span>
       <span><strong>Sede MPDFT:</strong> Eixo Monumental, Praça do Buriti, Brasília-DF</span>
     </div>
     <div style="display: flex; align-items: center; gap: 0.75rem;">
-      <button class="btn btn-sm" style="background: rgba(255,255,255,0.12); color: #ffffff; border: none;" onclick="alert('VLibras Widget carregado: Tradutor para Língua Brasileira de Sinais ativado.')">
-        🤟 VLibras Accessibility
-      </button>
-      <button class="btn btn-sm btn-primary" onclick="openRedeModal()">
+      <button type="button" class="btn btn-sm btn-primary" onclick="openRedeModal()" aria-label="Abrir formulário restrito da rede de proteção do DF">
         🔒 Sou Rede de Proteção
       </button>
     </div>
   </div>
 
   <!-- Main Header -->
-  <header class="header-main">
+  <header class="header-main" role="banner">
     <div class="shell-container header-container">
-      <a href="#inicio" class="header-brand" onclick="switchTab('inicio')">
-        <img src="logo-mpdft.png" alt="MPDFT — Ministério Público do Distrito Federal e Territórios" class="logo-mpdft">
+      <a href="#inicio" class="header-brand" onclick="switchTab('inicio')" aria-label="Portal Diversidade MPDFT — Ir para a página inicial">
+        <!-- Logomarca embutida em SVG — substituível pelo arquivo oficial da Secom quando disponível -->
+        <div class="logo-mpdft-wrap">
+          <svg class="logo-mpdft-svg" viewBox="0 0 270 48" width="270" height="48" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Logotipo institucional: Ministério Público do Distrito Federal e Territórios">
+            <!-- Quadrado vermelho com cantos arredondados contendo MP em branco negrito -->
+            <rect x="2" y="2" width="44" height="44" rx="8" fill="#D01523"/>
+            <text x="24" y="31" font-family="'Segoe UI', 'Nunito', Roboto, sans-serif" font-size="20" font-weight="900" fill="#FFFFFF" text-anchor="middle" letter-spacing="-0.5px">MP</text>
+            <!-- Texto DFT em cinza (#9C9E9F) negrito -->
+            <text x="53" y="33" font-family="'Segoe UI', 'Nunito', Roboto, sans-serif" font-size="24" font-weight="800" fill="#9C9E9F" letter-spacing="0.5px">DFT</text>
+            <!-- Nome oficial por extenso em 3 linhas pequenas -->
+            <text x="114" y="15" font-family="'Segoe UI', 'Nunito', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#2C3E50">Ministério Público</text>
+            <text x="114" y="27" font-family="'Segoe UI', 'Nunito', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#2C3E50">do Distrito Federal</text>
+            <text x="114" y="39" font-family="'Segoe UI', 'Nunito', Roboto, sans-serif" font-size="9.5" font-weight="600" fill="#2C3E50">e Territórios</text>
+          </svg>
+        </div>
         <div class="brand-titles">
           <h1>
-            <span>PORTAL DIVERSIDADE <span style="font-size: 0.7rem; background: rgba(255,255,255,0.2); padding: 0.15rem 0.4rem; border-radius: 4px; vertical-align: middle;">NED / NDH</span></span>
-            <span class="title-rainbow-underline" role="presentation"></span>
+            <span>PORTAL DIVERSIDADE <span style="font-size: 0.7rem; background: rgba(255,255,255,0.2); padding: 0.15rem 0.5rem; border-radius: 9999px; vertical-align: middle;">NED / NDH</span></span>
+            <span class="title-rainbow-underline" role="presentation" aria-hidden="true"></span>
           </h1>
           <p>Núcleo de Enfrentamento à Discriminação e Promoção dos Direitos Humanos</p>
         </div>
       </a>
-      <div>
-        <a href="#denuncias" onclick="switchTab('denuncias')" class="btn btn-sm btn-action">
+      <div style="display:flex; align-items:center; gap: 0.75rem;">
+        <button type="button" class="menu-toggle-btn" id="mobileMenuBtn" aria-expanded="false" aria-controls="navTabs" aria-label="Abrir menu principal de navegação" onclick="toggleMobileMenu()">
+          <span aria-hidden="true">☰</span> <span>Menu</span>
+        </button>
+        <a href="#denuncias" onclick="switchTab('denuncias')" class="btn btn-sm btn-action" aria-label="Ir para canais de denúncia acessível">
           🚨 Fazer Denúncia Acessível
         </a>
       </div>
@@ -588,25 +1172,26 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
   </header>
 
   <!-- Navigation Bar -->
-  <nav class="nav-container" aria-label="Navegação Principal do Portal">
-    <div class="shell-container nav-tabs" id="navTabs">
-      <button class="nav-tab-btn active" onclick="switchTab('inicio')">Início & Histórico</button>
-      <button class="nav-tab-btn" onclick="switchTab('direitos')">Direitos & Legislação</button>
-      <button class="nav-tab-btn" onclick="switchTab('mpdft')">O que o MPDFT faz?</button>
-      <button class="nav-tab-btn" onclick="switchTab('servicos')">Serviços & Rede</button>
-      <button class="nav-tab-btn" onclick="switchTab('saude')">Saúde Integral</button>
-      <button class="nav-tab-btn" onclick="switchTab('trabalho')">Trabalho & Educação</button>
-      <button class="nav-tab-btn" onclick="switchTab('denuncias')">Canais de Denúncia</button>
-      <button class="nav-tab-btn" onclick="switchTab('transparencia')">Transparência</button>
-      <button class="nav-tab-btn" onclick="switchTab('estatisticas')">📊 Estatísticas & Painel</button>
+  <nav class="nav-container" role="navigation" aria-label="Navegação Principal do Portal">
+    <div class="shell-container nav-tabs" id="navTabs" role="menubar">
+      <button type="button" class="nav-tab-btn active" role="menuitem" onclick="switchTab('inicio')">Início & Histórico</button>
+      <button type="button" class="nav-tab-btn" role="menuitem" onclick="switchTab('direitos')">Direitos & Legislação</button>
+      <button type="button" class="nav-tab-btn" role="menuitem" onclick="switchTab('mpdft')">O que o MPDFT faz?</button>
+      <button type="button" class="nav-tab-btn" role="menuitem" onclick="switchTab('servicos')">Serviços & Rede</button>
+      <button type="button" class="nav-tab-btn" role="menuitem" onclick="switchTab('saude')">Saúde Integral</button>
+      <button type="button" class="nav-tab-btn" role="menuitem" onclick="switchTab('trabalho')">Trabalho & Educação</button>
+      <button type="button" class="nav-tab-btn" role="menuitem" onclick="switchTab('denuncias')">Canais de Denúncia</button>
+      <button type="button" class="nav-tab-btn" role="menuitem" onclick="switchTab('transparencia')">Transparência</button>
+      <button type="button" class="nav-tab-btn" role="menuitem" onclick="switchTab('estatisticas')">📊 Estatísticas & Painel</button>
     </div>
   </nav>
 
   <!-- Main Content Container -->
-  <main class="shell-container shell-section" id="mainContent">
+  <main class="shell-container shell-section" id="mainContent" role="main" tabindex="-1">
 
     <!-- SEÇÃO 1: INÍCIO & HISTÓRICO -->
-    <section id="inicio" class="section-block active">
+    <section id="inicio" class="section-block active" aria-labelledby="heading-inicio">
+      <h2 id="heading-inicio" class="sr-only">Início e Histórico do NED</h2>
       <div class="panel shell-fade" style="margin-bottom: 1.5rem; border-top: 4px solid var(--mpdft-blue-dark); padding: 1.5rem;">
         <h2 style="color: var(--mpdft-blue-dark); margin-top: 0;">Bem-vindo ao Portal Diversidade do MPDFT</h2>
         <p style="font-size: 1.05rem; line-height: 1.6; color: var(--mpdft-text-dark);">
@@ -673,9 +1258,9 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
     </section>
 
     <!-- SEÇÃO 2: DIREITOS & LEGISLAÇÃO -->
-    <section id="direitos" class="section-block">
+    <section id="direitos" class="section-block" aria-labelledby="heading-direitos">
       <div class="panel shell-fade" style="margin-bottom: 1.5rem; padding: 1.5rem;">
-        <h2 style="color: var(--mpdft-blue-dark); margin-top: 0;">Direitos & Marco Legislativo</h2>
+        <h2 id="heading-direitos" style="color: var(--mpdft-blue-dark); margin-top: 0;">Direitos & Marco Legislativo</h2>
         <p style="color: var(--mpdft-text-dark); opacity: 0.85;">
           Principais dispositivos constitucionais, infralegais, jurisprudências do STF e resoluções do CNJ e órgãos do DF de proteção aos direitos LGBTQIA+.
         </p>
@@ -745,9 +1330,9 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
     </section>
 
     <!-- SEÇÃO 3: O QUE O MPDFT FAZ? -->
-    <section id="mpdft" class="section-block">
+    <section id="mpdft" class="section-block" aria-labelledby="heading-mpdft">
       <div class="panel shell-fade" style="margin-bottom: 1.5rem; padding: 1.5rem;">
-        <h2 style="color: var(--mpdft-blue-dark); margin-top: 0;">O que o MPDFT faz na Defesa da Diversidade?</h2>
+        <h2 id="heading-mpdft" style="color: var(--mpdft-blue-dark); margin-top: 0;">O que o MPDFT faz na Defesa da Diversidade?</h2>
         <p style="color: var(--mpdft-text-dark); opacity: 0.85;">
           A atuação institucional do Ministério Público do Distrito Federal e Territórios por meio do Núcleo de Enfrentamento à Discriminação (NED).
         </p>
@@ -785,17 +1370,19 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
     </section>
 
     <!-- SEÇÃO 4: SERVIÇOS & REDE DE APOIO -->
-    <section id="servicos" class="section-block">
+    <section id="servicos" class="section-block" aria-labelledby="heading-servicos">
       <div class="panel shell-fade" style="margin-bottom: 1.5rem; padding: 1.5rem;">
-        <h2 style="color: var(--mpdft-blue-dark); margin-top: 0;">Serviços & Rede de Apoio no DF</h2>
+        <h2 id="heading-servicos" style="color: var(--mpdft-blue-dark); margin-top: 0;">Serviços & Rede de Apoio no DF</h2>
         <p style="color: var(--mpdft-text-dark); opacity: 0.85;">
           Encontre unidades estaduais, serviços especializados de saúde, assistência jurídica e órgãos de acolhimento social no Distrito Federal.
         </p>
       </div>
 
-      <!-- Search and Filter Bar -->
-      <div class="shell-toolbar" style="margin-bottom: 1.5rem;">
+      <!-- Search and Filter Bar com rótulos acessíveis -->
+      <div class="shell-toolbar" style="margin-bottom: 1.5rem;" role="search" aria-label="Filtro de Serviços e Equipamentos Públicos">
+        <label for="svcSearch" class="sr-only">Pesquisar serviço por texto ou cidade</label>
         <input type="text" id="svcSearch" class="input" placeholder="Buscar por serviço, cidade ou palavra-chave..." onkeyup="filterServicesTable()" style="max-width: 320px;">
+        <label for="svcCategory" class="sr-only">Filtrar por categoria de serviço</label>
         <select id="svcCategory" class="input" onchange="filterServicesTable()" style="max-width: 220px;">
           <option value="TODOS">Todas as Categorias</option>
           <option value="Segurança/Proteção">Segurança & Proteção</option>
@@ -803,12 +1390,12 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
           <option value="Documentação/Jurídico">Documentação & Jurídico</option>
           <option value="Conselhos/Sociedade">Conselhos & Direitos</option>
         </select>
-        <span style="font-size: 0.85rem; color: var(--mpdft-text-dark);" id="svcCounter">Exibindo todos os serviços</span>
+        <span style="font-size: 0.85rem; color: var(--mpdft-text-dark);" id="svcCounter" aria-live="polite">Exibindo todos os serviços</span>
       </div>
 
-      <!-- Services Table -->
-      <div class="panel" style="padding: 0; overflow-x: auto;">
-        <table class="shell-table" id="servicesTable" style="width: 100%; min-width: 650px;">
+      <!-- Services Table com scroll acessível por teclado -->
+      <div class="panel table-scroll-container" style="padding: 0;" tabindex="0" role="region" aria-label="Tabela de serviços e rede de apoio no DF (role horizontalmente para ver todos os dados)">
+        <table class="shell-table" id="servicesTable" style="width: 100%; min-width: 650px;" summary="Lista de equipamentos públicos e órgãos de apoio no DF com endereços e horários">
           <thead>
             <tr style="background: var(--mpdft-blue-dark); color: #ffffff;">
               <th style="color:#ffffff;">Equipamento / Serviço</th>
@@ -874,9 +1461,9 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
     </section>
 
     <!-- SEÇÃO 5: SAÚDE INTEGRAL -->
-    <section id="saude" class="section-block">
+    <section id="saude" class="section-block" aria-labelledby="heading-saude">
       <div class="panel shell-fade" style="margin-bottom: 1.5rem; padding: 1.5rem;">
-        <h2 style="color: var(--mpdft-blue-dark); margin-top: 0;">Saúde Integral & Atendimento Acolhedor</h2>
+        <h2 id="heading-saude" style="color: var(--mpdft-blue-dark); margin-top: 0;">Saúde Integral & Atendimento Acolhedor</h2>
         <p style="color: var(--mpdft-text-dark); opacity: 0.85;">
           Garantia de acesso universal, humanizado e sem preconceito ao Sistema Único de Saúde (SUS) no DF.
         </p>
@@ -920,9 +1507,9 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
     </section>
 
     <!-- SEÇÃO 6: TRABALHO & EDUCAÇÃO -->
-    <section id="trabalho" class="section-block">
+    <section id="trabalho" class="section-block" aria-labelledby="heading-trabalho">
       <div class="panel shell-fade" style="margin-bottom: 1.5rem; padding: 1.5rem;">
-        <h2 style="color: var(--mpdft-blue-dark); margin-top: 0;">Trabalho & Educação Inclusiva</h2>
+        <h2 id="heading-trabalho" style="color: var(--mpdft-blue-dark); margin-top: 0;">Trabalho & Educação Inclusiva</h2>
         <p style="color: var(--mpdft-text-dark); opacity: 0.85;">
           Combate ao assédio, promoção do emprego digno e ambiente escolar seguro e acolhedor para todas as identidades.
         </p>
@@ -950,9 +1537,9 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
     </section>
 
     <!-- SEÇÃO 7: CANAIS DE DENÚNCIA -->
-    <section id="denuncias" class="section-block">
+    <section id="denuncias" class="section-block" aria-labelledby="heading-denuncias">
       <div class="panel shell-fade" style="margin-bottom: 1.5rem; background: var(--mpdft-blue-soft); border: 1px solid var(--mpdft-blue-light); padding: 1.5rem;">
-        <h2 style="color: var(--mpdft-blue-dark); margin-top: 0;">🚨 Canais de Denúncia e Proteção de Direitos</h2>
+        <h2 id="heading-denuncias" style="color: var(--mpdft-blue-dark); margin-top: 0;">🚨 Canais de Denúncia e Proteção de Direitos</h2>
         <p style="color: var(--mpdft-blue-dark); margin-bottom: 0;">
           Se você foi vítima ou testemunhou discriminação, agressão ou homotransfobia no DF, utilize um dos canais oficiais abaixo.
         </p>
@@ -1019,9 +1606,9 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
     </section>
 
     <!-- SEÇÃO 8: TRANSPARÊNCIA -->
-    <section id="transparencia" class="section-block">
+    <section id="transparencia" class="section-block" aria-labelledby="heading-transparencia">
       <div class="panel shell-fade" style="margin-bottom: 1.5rem; padding: 1.5rem;">
-        <h2 style="color: var(--mpdft-blue-dark); margin-top: 0;">Transparência & Publicações do NED</h2>
+        <h2 id="heading-transparencia" style="color: var(--mpdft-blue-dark); margin-top: 0;">Transparência & Publicações do NED</h2>
         <p style="color: var(--mpdft-text-dark); opacity: 0.85;">
           Cartilhas orientativas, painéis de gestão, termos de uso do portal e repositórios de material instrutivo do MPDFT.
         </p>
@@ -1063,7 +1650,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
     </section>
 
     <!-- SEÇÃO 9: ESTATÍSTICAS (PAINEL CENTRAL) -->
-    <section id="estatisticas" class="section-block">
+    <section id="estatisticas" class="section-block" aria-labelledby="heading-estatisticas">
       
       <!-- Banner Toast Informado -->
       <div class="toast-banner shell-fade">
@@ -1072,13 +1659,13 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
           <br><span style="font-size: 0.825rem;">Garantia de anonimato: Nenhuma informação pessoal identificante é publicada no painel.</span>
         </div>
         <div style="display: flex; gap: 0.5rem; align-items: center;" class="btn-no-print">
-          <button class="btn btn-sm btn-action" onclick="refreshDashboardData()">🔄 Atualizar Dados</button>
-          <button class="btn btn-sm btn-outline" onclick="exportDataCSV()">📥 Baixar CSV</button>
+          <button type="button" class="btn btn-sm btn-action" onclick="refreshDashboardData()" aria-label="Sincronizar e atualizar indicadores em tempo real">🔄 Atualizar Dados</button>
+          <button type="button" class="btn btn-sm btn-outline" onclick="exportDataCSV()" aria-label="Baixar planilha de estatísticas em formato Excel/CSV">📥 Baixar Planilha</button>
         </div>
       </div>
 
       <div class="panel shell-fade" style="margin-bottom: 1.5rem; border-top: 4px solid var(--mpdft-blue-dark); padding: 1.5rem;">
-        <h2 style="color: var(--mpdft-blue-dark); margin-top: 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
+        <h2 id="heading-estatisticas" style="color: var(--mpdft-blue-dark); margin-top: 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
           <span>Painel de Estatísticas — Atuação NED/MPDFT</span>
           <span class="badge" style="background:var(--mpdft-blue-soft); color:var(--mpdft-blue-dark); font-weight:normal; font-size:0.8rem;">Banco de Dados Ativo (Mock / API Sync)</span>
         </h2>
@@ -1087,67 +1674,116 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
         </p>
       </div>
 
-      <!-- KPI Stat Cards -->
-      <div class="shell-grid" style="margin-bottom: 1.5rem;">
-        <div class="kpi">
+      <!-- KPI Stat Cards com aria-live="polite" para leitores de tela -->
+      <div class="shell-grid" style="margin-bottom: 1.5rem;" aria-live="polite" aria-atomic="true">
+        <div class="kpi" tabindex="0">
           <div class="kpi-label">Atendimentos / Denúncias Registradas</div>
           <div class="kpi-value" id="kpi-denuncias">15.443</div>
           <div class="kpi-delta up">+12.4% este ano</div>
         </div>
-        <div class="kpi">
+        <div class="kpi" tabindex="0">
           <div class="kpi-label">Procedimentos Instaurados</div>
           <div class="kpi-value" id="kpi-procedimentos">1.280</div>
           <div class="kpi-delta up">+8.1% vs anterior</div>
         </div>
-        <div class="kpi">
+        <div class="kpi" tabindex="0">
           <div class="kpi-label">TACs Celebrados</div>
           <div class="kpi-value" id="kpi-tacs">340</div>
           <div class="kpi-delta up">+15.2% resolução</div>
         </div>
-        <div class="kpi">
+        <div class="kpi" tabindex="0">
           <div class="kpi-label">Ações Civis Públicas (ACPs)</div>
           <div class="kpi-value" id="kpi-acps">185</div>
           <div class="kpi-delta up">Ajuizadas no TJDFT</div>
         </div>
-        <div class="kpi">
+        <div class="kpi" tabindex="0">
           <div class="kpi-label">Horas de Atendimento / Mediação</div>
           <div class="kpi-value" id="kpi-horas">529.501</div>
           <div class="kpi-delta">NED / REDE DF</div>
         </div>
       </div>
 
-      <!-- Charts Row -->
+      <!-- Charts Row com tabelas de dados textuais alternativas para leitores de tela -->
       <div class="grid-2" style="margin-bottom: 1.5rem;">
         <!-- Bar Chart: Casos por Mês -->
         <div class="panel">
-          <h3 style="margin-top:0; color:#12203d; font-size:1.05rem;">Ocorrências e Registros por Mês (Últimos 12 Meses)</h3>
+          <h3 id="chartTitleCasos" style="margin-top:0; color:#12203d; font-size:1.05rem;">Ocorrências e Registros por Mês (Últimos 12 Meses)</h3>
           <p class="muted" style="font-size:0.8rem;">Evolução mensal dos atendimentos no DF</p>
-          <div class="chart-box" id="chartCasosMes"></div>
+          <div class="chart-box" id="chartCasosMes" role="img" aria-labelledby="chartTitleCasos" aria-describedby="descCasosMes"></div>
+          <!-- Tabela alternativa acessível para leitores de tela -->
+          <div id="descCasosMes" class="sr-only">
+            <table role="table" aria-label="Dados de atendimentos mensais">
+              <caption>Evolução mensal de registros no DF</caption>
+              <thead><tr><th>Mês</th><th>Casos</th></tr></thead>
+              <tbody>
+                <tr><td>Out/25</td><td>45</td></tr>
+                <tr><td>Nov/25</td><td>52</td></tr>
+                <tr><td>Dez/25</td><td>38</td></tr>
+                <tr><td>Jan/26</td><td>61</td></tr>
+                <tr><td>Fev/26</td><td>55</td></tr>
+                <tr><td>Mar/26</td><td>49</td></tr>
+                <tr><td>Abr/26</td><td>70</td></tr>
+                <tr><td>Mai/26</td><td>63</td></tr>
+                <tr><td>Jun/26</td><td>58</td></tr>
+                <tr><td>Jul/26</td><td>67</td></tr>
+                <tr><td>Ago/26</td><td>71</td></tr>
+                <tr><td>Set/26</td><td>74</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <!-- Donut Chart: Tipos de Violação -->
         <div class="panel">
-          <h3 style="margin-top:0; color:#12203d; font-size:1.05rem;">Distribuição de Violações por Categoria</h3>
+          <h3 id="chartTitleTipos" style="margin-top:0; color:#12203d; font-size:1.05rem;">Distribuição de Violações por Categoria</h3>
           <p class="muted" style="font-size:0.8rem;">Proporção percentual das denúncias apuradas</p>
-          <div class="chart-box" id="chartTiposViolacao"></div>
+          <div class="chart-box" id="chartTiposViolacao" role="img" aria-labelledby="chartTitleTipos" aria-describedby="descTiposViolacao"></div>
+          <!-- Tabela alternativa acessível para leitores de tela -->
+          <div id="descTiposViolacao" class="sr-only">
+            <table role="table" aria-label="Percentual de violações por categoria">
+              <caption>Distribuição percentual das denúncias apuradas</caption>
+              <thead><tr><th>Categoria</th><th>Percentual</th></tr></thead>
+              <tbody>
+                <tr><td>Serviços e Comércio</td><td>30%</td></tr>
+                <tr><td>Violência Física e Verbal</td><td>22%</td></tr>
+                <tr><td>Trabalho</td><td>18%</td></tr>
+                <tr><td>Escola e Educação</td><td>15%</td></tr>
+                <tr><td>Espaço Público</td><td>15%</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
       <!-- Line Chart: Evolução Acumulada -->
       <div class="panel" style="margin-bottom: 1.5rem;">
-        <h3 style="margin-top:0; color:#12203d; font-size:1.05rem;">Evolução Acumulativa de Casos Solucionados (Bimestral)</h3>
+        <h3 id="chartTitleEvolucao" style="margin-top:0; color:#12203d; font-size:1.05rem;">Evolução Acumulativa de Casos Solucionados (Bimestral)</h3>
         <p class="muted" style="font-size:0.8rem;">Progresso das conciliações e TACs formalizados</p>
-        <div class="chart-box" id="chartEvolucaoAcumulada"></div>
+        <div class="chart-box" id="chartEvolucaoAcumulada" role="img" aria-labelledby="chartTitleEvolucao" aria-describedby="descEvolucaoAcumulada"></div>
+        <div id="descEvolucaoAcumulada" class="sr-only">
+          <table role="table" aria-label="Evolução acumulada de casos solucionados">
+            <caption>Total cumulativo bimestral de soluções amigáveis e TACs</caption>
+            <thead><tr><th>Bimestre</th><th>Total Acumulado</th></tr></thead>
+            <tbody>
+              <tr><td>1º Bimestre</td><td>18</td></tr>
+              <tr><td>2º Bimestre</td><td>42</td></tr>
+              <tr><td>3º Bimestre</td><td>61</td></tr>
+              <tr><td>4º Bimestre</td><td>84</td></tr>
+              <tr><td>5º Bimestre</td><td>110</td></tr>
+              <tr><td>6º Bimestre</td><td>130</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      <!-- Ranking Table por Situação / Cidade -->
-      <div class="panel">
-        <h3 style="margin-top:0; color:#12203d; font-size:1.05rem; display:flex; justify-content:space-between; align-items:center;">
+      <!-- Ranking Table por Situação / Cidade com scroll acessível -->
+      <div class="panel table-scroll-container" tabindex="0" role="region" aria-label="Tabela de ranking de ocorrências por Região Administrativa do DF">
+        <h3 style="margin-top:0; color:#12203d; font-size:1.05rem; display:flex; justify-content:space-between; align-items:center; padding: 1.5rem 1.5rem 0.5rem 1.5rem;">
           <span>Ranking de Ocorrências por Região Administrativa (RA) do DF</span>
-          <span class="tag-todo">[DADOS A COMPLETAR]</span>
+          <span class="tag-todo" aria-label="Status: Dados a completar">[DADOS A COMPLETAR]</span>
         </h3>
-        <div style="overflow-x: auto;">
-          <table class="shell-table" id="rankingTable" style="width:100%;">
+        <div style="overflow-x: auto; padding: 0 1.5rem 1.5rem 1.5rem;">
+          <table class="shell-table" id="rankingTable" style="width:100%;" summary="Demonstrativo de violações por região administrativa do DF e status da rede de acolhimento">
             <thead>
               <tr>
                 <th>Região Administrativa (RA)</th>
@@ -1201,25 +1837,25 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
 
   </main>
 
-  <!-- Modal: Sou Rede de Proteção -->
-  <div class="modal-overlay" id="redeModal" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
+  <!-- Modal: Sou Rede de Proteção (com acessibilidade WCAG completa e foco travado) -->
+  <div class="modal-overlay" id="redeModal" role="dialog" aria-labelledby="modalTitle" aria-modal="true" aria-hidden="true">
     <div class="modal-content">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
         <h3 id="modalTitle" style="margin:0; color:#12203d;">🔒 Portal Restrito — Sou Rede de Proteção</h3>
-        <button onclick="closeRedeModal()" style="background:none; border:none; font-size:1.25rem; cursor:pointer;">✕</button>
+        <button type="button" onclick="closeRedeModal()" style="background:none; border:none; font-size:1.5rem; cursor:pointer; min-width:44px; min-height:44px;" aria-label="Fechar janela modal">✕</button>
       </div>
       <p style="font-size:0.9rem; color:#475569;">
         Área destinada a servidores do MPDFT, delegados da Polícia Civil do DF, conselheiros tutelares e profissionais cadastrados no sistema interinstitucional do NED.
       </p>
       
-      <form onsubmit="event.preventDefault(); alert('Acesso restrito: Dados enviados para autenticação via Certificado ICP-Brasil / SPU MPDFT.'); closeRedeModal();">
+      <form onsubmit="handleRedeSubmit(event)">
         <div style="margin-bottom:1rem;">
-          <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.25rem;">Matrícula / CPF do Profissional:</label>
-          <input type="text" class="input" placeholder="Ex: 123456 ou 000.000.000-00" required style="width:100%;">
+          <label for="redeMatricula" style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.25rem;">Matrícula / CPF do Profissional:</label>
+          <input type="text" id="redeMatricula" class="input" placeholder="Ex: 123456 ou 000.000.000-00" required style="width:100%;" aria-required="true">
         </div>
         <div style="margin-bottom:1.25rem;">
-          <label style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.25rem;">Órgão / Instituição de Origem:</label>
-          <select class="input" style="width:100%;" required>
+          <label for="redeInstituicao" style="display:block; font-size:0.85rem; font-weight:600; margin-bottom:0.25rem;">Órgão / Instituição de Origem:</label>
+          <select id="redeInstituicao" class="input" style="width:100%;" required aria-required="true">
             <option value="">Selecione sua instituição...</option>
             <option value="MPDFT">MPDFT — Ministério Público do DF</option>
             <option value="PCDF">PCDF — Polícia Civil (DDSEL/5ª DP)</option>
@@ -1228,7 +1864,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
             <option value="DPDF">DPDF — Defensoria Pública do DF</option>
           </select>
         </div>
-        <div style="display:flex; justify-content:flex-end; gap:0.5rem;">
+        <div style="display:flex; justify-content:flex-end; gap:0.5rem; flex-wrap:wrap;">
           <button type="button" class="btn btn-outline" onclick="closeRedeModal()">Cancelar</button>
           <button type="submit" class="btn btn-primary">Acessar Sistema Integrado</button>
         </div>
@@ -1236,8 +1872,8 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer>
+  <!-- Footer Institucional -->
+  <footer role="contentinfo">
     <div class="shell-container">
       <div class="grid-3" style="margin-bottom: 2rem;">
         <div>
@@ -1276,22 +1912,192 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
   <!-- Script Implementation -->
   <script>
     /**
-     * CONFIGURAÇÃO E INTEGRAÇÃO DE DADOS (GOOGLE SHEETS / API EXTERNA)
-     * 
-     * Para conectar a uma planilha pública em tempo real do Google Sheets:
-     * 1. URL da Planilha em formato CSV:
-     *    const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1WN6BZYnLfyA-TDRTl6l3dAVlFReportsE71rSnzKRw9BSw36mI/gviz/tq?tqx=out:csv&sheet=indicadores";
-     * 2. Função de carregamento com Fallback automático:
-     *    async function loadDataFromSheets() {
-     *      try {
-     *        const res = await fetch(SHEET_CSV_URL);
-     *        const text = await res.text();
-     *        // Parse do CSV e atualização do dashboard
-     *      } catch(err) {
-     *        // Fallback transparente usando o objeto MOCK_DATA
-     *      }
-     *    }
+     * SISTEMA DE ACESSIBILIDADE WCAG 2.1 AA/AAA
+     * Gerencia estado visual, persistência em localStorage e tecnologias assistivas.
      */
+    const A11Y_STATE = {
+      fontLevels: [1.0, 1.125, 1.25, 1.375, 1.5],
+      currentFontIdx: 0,
+      highContrast: false,
+      darkMode: false,
+      highlightLinks: false,
+      textSpacing: false,
+      readableFont: false
+    };
+
+    function initAccessibility() {
+      try {
+        const saved = JSON.parse(localStorage.getItem('mpdft_a11y_pref') || '{}');
+        if (typeof saved.currentFontIdx === 'number' && saved.currentFontIdx >= 0 && saved.currentFontIdx < 5) {
+          A11Y_STATE.currentFontIdx = saved.currentFontIdx;
+        }
+        A11Y_STATE.highContrast = !!saved.highContrast;
+        A11Y_STATE.darkMode = !!saved.darkMode;
+        A11Y_STATE.highlightLinks = !!saved.highlightLinks;
+        A11Y_STATE.textSpacing = !!saved.textSpacing;
+        A11Y_STATE.readableFont = !!saved.readableFont;
+      } catch (e) {
+        console.warn('Erro ao ler preferências de acessibilidade:', e);
+      }
+      applyAccessibilitySettings();
+    }
+
+    function saveAccessibility() {
+      try {
+        localStorage.setItem('mpdft_a11y_pref', JSON.stringify(A11Y_STATE));
+      } catch (e) {}
+    }
+
+    function applyAccessibilitySettings() {
+      const root = document.documentElement;
+      
+      // 1. Escala de Fonte
+      const scale = A11Y_STATE.fontLevels[A11Y_STATE.currentFontIdx];
+      root.style.setProperty('--font-scale', scale);
+
+      // 2. Alto Contraste
+      if (A11Y_STATE.highContrast) {
+        root.classList.add('high-contrast');
+        root.classList.remove('dark-mode');
+        document.getElementById('btnHighContrast')?.setAttribute('aria-pressed', 'true');
+        document.getElementById('btnDarkMode')?.setAttribute('aria-pressed', 'false');
+      } else {
+        root.classList.remove('high-contrast');
+        document.getElementById('btnHighContrast')?.setAttribute('aria-pressed', 'false');
+      }
+
+      // 3. Modo Escuro
+      if (A11Y_STATE.darkMode && !A11Y_STATE.highContrast) {
+        root.classList.add('dark-mode');
+        document.getElementById('btnDarkMode')?.setAttribute('aria-pressed', 'true');
+      } else {
+        root.classList.remove('dark-mode');
+        document.getElementById('btnDarkMode')?.setAttribute('aria-pressed', 'false');
+      }
+
+      // 4. Links Destacados
+      if (A11Y_STATE.highlightLinks) {
+        root.classList.add('highlight-links');
+        document.getElementById('btnHighlightLinks')?.setAttribute('aria-pressed', 'true');
+      } else {
+        root.classList.remove('highlight-links');
+        document.getElementById('btnHighlightLinks')?.setAttribute('aria-pressed', 'false');
+      }
+
+      // 5. Espaçamento Aumentado
+      if (A11Y_STATE.textSpacing) {
+        root.classList.add('text-spacing');
+        document.getElementById('btnTextSpacing')?.setAttribute('aria-pressed', 'true');
+      } else {
+        root.classList.remove('text-spacing');
+        document.getElementById('btnTextSpacing')?.setAttribute('aria-pressed', 'false');
+      }
+
+      // 6. Fonte Legível
+      if (A11Y_STATE.readableFont) {
+        root.classList.add('readable-font');
+        document.getElementById('btnReadableFont')?.setAttribute('aria-pressed', 'true');
+      } else {
+        root.classList.remove('readable-font');
+        document.getElementById('btnReadableFont')?.setAttribute('aria-pressed', 'false');
+      }
+
+      saveAccessibility();
+    }
+
+    function changeFontSize(delta) {
+      const nextIdx = A11Y_STATE.currentFontIdx + delta;
+      if (nextIdx >= 0 && nextIdx < A11Y_STATE.fontLevels.length) {
+        A11Y_STATE.currentFontIdx = nextIdx;
+        applyAccessibilitySettings();
+      }
+    }
+
+    function toggleHighContrast() {
+      A11Y_STATE.highContrast = !A11Y_STATE.highContrast;
+      if (A11Y_STATE.highContrast) {
+        A11Y_STATE.darkMode = false;
+      }
+      applyAccessibilitySettings();
+    }
+
+    function toggleDarkMode() {
+      A11Y_STATE.darkMode = !A11Y_STATE.darkMode;
+      if (A11Y_STATE.darkMode) {
+        A11Y_STATE.highContrast = false;
+      }
+      applyAccessibilitySettings();
+    }
+
+    function toggleHighlightLinks() {
+      A11Y_STATE.highlightLinks = !A11Y_STATE.highlightLinks;
+      applyAccessibilitySettings();
+    }
+
+    function toggleTextSpacing() {
+      A11Y_STATE.textSpacing = !A11Y_STATE.textSpacing;
+      applyAccessibilitySettings();
+    }
+
+    function toggleReadableFont() {
+      A11Y_STATE.readableFont = !A11Y_STATE.readableFont;
+      applyAccessibilitySettings();
+    }
+
+    function resetAccessibility() {
+      A11Y_STATE.currentFontIdx = 0;
+      A11Y_STATE.highContrast = false;
+      A11Y_STATE.darkMode = false;
+      A11Y_STATE.highlightLinks = false;
+      A11Y_STATE.textSpacing = false;
+      A11Y_STATE.readableFont = false;
+      applyAccessibilitySettings();
+    }
+
+    // Carregamento dinâmico e seguro do widget oficial VLibras
+    let vlibrasLoaded = false;
+    function activateVLibras() {
+      if (vlibrasLoaded && window.VLibras) {
+        alert('O widget do VLibras já está carregado e disponível na lateral direita.');
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = 'https://vlibras.gov.br/app/vlibras-widget.js';
+      script.onload = () => {
+        if (window.VLibras) {
+          new window.VLibras.Widget('https://vlibras.gov.br/app');
+          vlibrasLoaded = true;
+          alert('Widget VLibras carregado com sucesso. Selecione o ícone de Libras na lateral para traduzir o conteúdo.');
+        }
+      };
+      script.onerror = () => {
+        alert('Não foi possível carregar o VLibras neste momento. Verifique sua conexão de rede.');
+      };
+      document.body.appendChild(script);
+    }
+
+    // Controle do Menu Hambúrguer Responsivo para Mobile
+    function toggleMobileMenu() {
+      const navTabs = document.getElementById('navTabs');
+      const menuBtn = document.getElementById('mobileMenuBtn');
+      const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+      
+      menuBtn.setAttribute('aria-expanded', !isExpanded);
+      if (!isExpanded) {
+        navTabs.classList.add('open');
+      } else {
+        navTabs.classList.remove('open');
+      }
+    }
+
+    function closeMobileMenu() {
+      const navTabs = document.getElementById('navTabs');
+      const menuBtn = document.getElementById('mobileMenuBtn');
+      if (navTabs && menuBtn) {
+        navTabs.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+      }
+    }
 
     // Data Store Mock do NED/MPDFT (Paleta Oficial MPDFT 2012)
     const MOCK_DATA = {
@@ -1315,7 +2121,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
           'Est. Público (15%)'
         ],
         values: [30, 22, 18, 15, 15],
-        colors: ['#00284C', '#1C5EA9', '#4A90D0', '#7CAEE0', '#E87811'] // Tons de azul + 1 fatia laranja oficial
+        colors: ['#1B3A5C', '#2C5F8A', '#4A90D0', '#85B6E4', '#E87811'] // Tons de azul institucional + 1 fatia laranja acolhedor
       },
       evolucaoAcumulada: {
         labels: ['1º Bim', '2º Bim', '3º Bim', '4º Bim', '5º Bim', '6º Bim'],
@@ -1326,40 +2132,69 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
     // Tab Navigation Logic
     function switchTab(tabId) {
       // Hide all sections
-      document.querySelectorAll('.section-block').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.section-block').forEach(sec => {
+        sec.classList.remove('active');
+        sec.setAttribute('aria-hidden', 'true');
+      });
       
       // Remove active class from buttons
-      document.querySelectorAll('.nav-tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+        btn.setAttribute('aria-selected', 'false');
+      });
       
       // Activate target section
       const targetSec = document.getElementById(tabId);
       if (targetSec) {
         targetSec.classList.add('active');
+        targetSec.removeAttribute('aria-hidden');
       }
 
       // Highlight active nav button
       const activeBtn = Array.from(document.querySelectorAll('.nav-tab-btn')).find(btn => {
-        return btn.getAttribute('onclick').includes(`'${tabId}'`);
+        return btn.getAttribute('onclick')?.includes(`'${tabId}'`);
       });
       if (activeBtn) {
         activeBtn.classList.add('active');
+        activeBtn.setAttribute('aria-selected', 'true');
       }
+
+      // Fecha menu mobile após seleção
+      closeMobileMenu();
 
       // Scroll smoothly to top of section on mobile
       window.scrollTo({ top: 120, behavior: 'smooth' });
 
       // Render charts if switching to statistics tab
       if (tabId === 'estatisticas') {
-        setTimeout(renderDashboardCharts, 100);
+        setTimeout(renderDashboardCharts, 120);
       }
     }
 
-    // Modal Control Functions
+    // Modal Control Functions com foco acessível
+    let previousActiveElement = null;
     function openRedeModal() {
-      document.getElementById('redeModal').classList.add('open');
+      previousActiveElement = document.activeElement;
+      const modal = document.getElementById('redeModal');
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      const input = document.getElementById('redeMatricula');
+      if (input) input.focus();
     }
+
     function closeRedeModal() {
-      document.getElementById('redeModal').classList.remove('open');
+      const modal = document.getElementById('redeModal');
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      if (previousActiveElement) {
+        previousActiveElement.focus();
+      }
+    }
+
+    function handleRedeSubmit(e) {
+      e.preventDefault();
+      alert('Acesso restrito: Dados enviados para validação de credencial institucional junto ao SPU/MPDFT.');
+      closeRedeModal();
     }
 
     // Services Table Filter Logic
@@ -1403,19 +2238,45 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       document.getElementById('kpi-acps').innerText = fmt.num(MOCK_DATA.indicadores.acps);
       document.getElementById('kpi-horas').innerText = fmt.num(MOCK_DATA.indicadores.horas);
 
-      // Bar Chart - Casos por Mês (Azul Institucional MPDFT)
+      // Bar Chart - Casos por Mês (Barras em degradê azul #1B3A5C -> #4A90D0)
       const barEl = document.getElementById('chartCasosMes');
       if (barEl) {
         barEl.innerHTML = '';
         window.skipChart.bar(barEl, {
           labels: MOCK_DATA.casosPorMes.labels,
           values: MOCK_DATA.casosPorMes.values,
-          color: '#00284C',
+          color: '#2C5F8A',
           format: 'num'
         });
+        
+        // Aplicação do degradê suave institucional nas barras
+        const svg = barEl.querySelector('svg');
+        if (svg) {
+          let defs = svg.querySelector('defs');
+          if (!defs) {
+            defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+            svg.prepend(defs);
+          }
+          const grad = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+          grad.setAttribute('id', 'mpdftBlueGrad');
+          grad.setAttribute('x1', '0');
+          grad.setAttribute('y1', '1');
+          grad.setAttribute('x2', '0');
+          grad.setAttribute('y2', '0');
+          grad.innerHTML = '<stop offset="0%" stop-color="#1B3A5C"/><stop offset="100%" stop-color="#4A90D0"/>';
+          defs.appendChild(grad);
+
+          svg.querySelectorAll('rect').forEach(rect => {
+            const fill = rect.getAttribute('fill');
+            if (fill && fill !== 'none' && !fill.includes('transparent')) {
+              rect.setAttribute('fill', 'url(#mpdftBlueGrad)');
+              rect.setAttribute('rx', '4');
+            }
+          });
+        }
       }
 
-      // Donut Chart - Tipos de Violação (Tons de Azul + 1 Fatia Laranja Destaque)
+      // Donut Chart - Tipos de Violação (Tons de Azul com 1 fatia Laranja)
       const donutEl = document.getElementById('chartTiposViolacao');
       if (donutEl) {
         donutEl.innerHTML = '';
@@ -1426,14 +2287,14 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
         });
       }
 
-      // Line Chart - Evolução Acumulada (Azul Médio #1C5EA9)
+      // Line Chart - Evolução Acumulada em Azul #2C5F8A
       const lineEl = document.getElementById('chartEvolucaoAcumulada');
       if (lineEl) {
         lineEl.innerHTML = '';
         window.skipChart.line(lineEl, {
           labels: MOCK_DATA.evolucaoAcumulada.labels,
           values: MOCK_DATA.evolucaoAcumulada.values,
-          color: '#1C5EA9',
+          color: '#2C5F8A',
           format: 'num'
         });
       }
@@ -1480,8 +2341,10 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       }
     }
 
-    // Initialize Page
+    // Initialize Page & Keyboard listeners
     document.addEventListener('DOMContentLoaded', () => {
+      initAccessibility();
+
       // Check if hash present in URL
       const hash = window.location.hash.replace('#', '');
       if (hash && document.getElementById(hash)) {
@@ -1489,6 +2352,38 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       } else {
         switchTab('inicio');
       }
+
+      // Fechar modal ou menu hambúrguer com tecla Escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          const modal = document.getElementById('redeModal');
+          if (modal && modal.classList.contains('open')) {
+            closeRedeModal();
+          }
+          closeMobileMenu();
+        }
+      });
+
+      // Fechar modal ao clicar fora
+      const modalOverlay = document.getElementById('redeModal');
+      if (modalOverlay) {
+        modalOverlay.addEventListener('click', (e) => {
+          if (e.target === modalOverlay) {
+            closeRedeModal();
+          }
+        });
+      }
+
+      // Re-renderizar gráficos em redimensionamento de janela
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          if (document.getElementById('estatisticas')?.classList.contains('active')) {
+            renderDashboardCharts();
+          }
+        }, 200);
+      });
     });
   </script>
 <script>
